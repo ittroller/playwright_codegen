@@ -5,6 +5,8 @@ import axios from 'axios'
 
 function App() {
   const [scripts, setScripts] = useState('')
+  const [locators, setLocators] = useState('')
+
   const handleStart = async () => {
     try {
       console.log(1234)
@@ -24,6 +26,17 @@ function App() {
     }
   }
 
+  const handleGetLocator = async () => {
+    try {
+      const response = await axios.get('http://localhost:3001/locators')
+      setLocators(response.data?.elements || '')
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  console.log(locators)
+
   return (
     <div className='App'>
       <div>
@@ -33,6 +46,7 @@ function App() {
       <div>
         <button onClick={handleStart}>Start</button>
         <button onClick={handleStop}>Stop</button>
+        <button onClick={handleGetLocator}>Get Locator</button>
       </div>
 
       <pre>{scripts}</pre>
